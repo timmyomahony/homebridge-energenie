@@ -2,7 +2,9 @@
 
 import time
 import sys
-sys.path.insert(0, 'pyenergenie/src')
+import os
+
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)) + '/pyenergenie/src')
 
 import energenie
 energenie.init()

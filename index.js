@@ -1,11 +1,14 @@
 const slugify = require('slugify');
+const path = require('path');
 
 const CommandQueue = require('./lib/CommandQueue');
 const Registry = require('./lib/Registry');
 const Switch = require('./lib/Switch');
 
 const COMMAND_DELAY = 1000;
-const REGISTRY_FILE = __dirname + "/registry.kvs";
+const HOME = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
+const REGISTRY_DIR = path.join(HOME, ".homebridge-energenie");
+const REGISTRY_FILE = path.join(REGISTRY_DIR, "registry.kvs");
 
 const commandQueue = new CommandQueue(COMMAND_DELAY);
 const registry = new Registry(REGISTRY_FILE);
@@ -43,7 +46,7 @@ function EnergenieAccessory(log, config) {
         self.state = state;
 
         commandQueue.queue(function() {
-            Switch(self.state ? 'on' : 'off', self.registry_name, cb);
+            Switch(REGISTRY_DIR, self.state ? 'on' : 'off', self.registry_name, cb);
         });
     }.bind(self));
 
