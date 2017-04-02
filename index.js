@@ -6,19 +6,18 @@ const Registry = require('./lib/Registry');
 const Switch = require('./lib/Switch');
 
 const COMMAND_DELAY = 1000;
-const HOME = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
-const REGISTRY_DIR = path.join(HOME, ".homebridge-energenie");
-const REGISTRY_FILE = path.join(REGISTRY_DIR, "registry.kvs");
-
-const commandQueue = new CommandQueue(COMMAND_DELAY);
-const registry = new Registry(REGISTRY_FILE);
 
 let Service, Characteristic;
+let command_queue, registry;
 
 module.exports = function(homebridge) {
     Service = homebridge.hap.Service;
     Characteristic = homebridge.hap.Characteristic;
 
+    command_queue = new CommandQueue(COMMAND_DELAY);
+
+    const registry_dir = path.dirname(homebridge.user.configPath());
+    registry = new Registry(path.join(registry_dir, "registry.kvs"));
     registry.reset();
 
     homebridge.registerAccessory("homebridge-energenie", "Energenie", EnergenieAccessory);
@@ -45,8 +44,8 @@ function EnergenieAccessory(log, config) {
     self.service.getCharacteristic(Characteristic.On).on('set', function(state, cb) {
         self.state = state;
 
-        commandQueue.queue(function() {
-            Switch(REGISTRY_DIR, self.state ? 'on' : 'off', self.registry_name, cb);
+        command_queue.queue(function() {
+            Switch(registry, self.state ? 'on' : 'off', self.registry_name, cb);
         });
     }.bind(self));
 
