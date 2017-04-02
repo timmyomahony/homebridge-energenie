@@ -5,7 +5,7 @@ const Registry = require('./lib/Registry');
 const Switch = require('./lib/Switch');
 
 const COMMAND_DELAY = 1000;
-const REGISTRY_FILE = "registry.kvs";
+const REGISTRY_FILE = __dirname + "/registry.kvs";
 
 const commandQueue = new CommandQueue(COMMAND_DELAY);
 const registry = new Registry(REGISTRY_FILE);
