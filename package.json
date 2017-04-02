@@ -1,6 +1,6 @@
 {
   "name": "homebridge-energenie",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Simple plugin for using Homebridge with Energenie switches via. pyenergenie.",
   "license": "MIT",
   "keywords": [
