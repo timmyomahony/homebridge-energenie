@@ -36,7 +36,6 @@ function EnergenieAccessory(log, config) {
     self.service.getCharacteristic(Characteristic.On).value = self.state;
 
     self.service.getCharacteristic(Characteristic.On).on('get', function(cb) {
-        console.log('get', self.state);
         cb(null, self.state);
     }.bind(self));
 
