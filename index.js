@@ -45,7 +45,7 @@ function EnergenieAccessory(log, config) {
         self.state = state;
 
         command_queue.queue(function() {
-            Switch(registry, self.state ? 'on' : 'off', self.registry_name, cb);
+            Switch(registry, self.state ? 'on' : 'off', self.registry_name, self.device_id, cb);
         });
     }.bind(self));
 
