@@ -12,11 +12,13 @@ try:
     if len(sys.argv) == 3:
         if sys.argv[1] == 'on':
             print("switch " + sys.argv[2] + " on")
-            exec('on(socket={})'.format(sys.argv[2]))
+            on(socket=int(sys.argv[2]))
+            print("ON!")
         elif sys.argv[1] == 'off':
             print("switch " + sys.argv[2] + " off")
-            exec('off(socket={})'.format(sys.argv[2]))
+            off(socket=int(sys.argv[2]))
+            print("OFF!")
     else:
         print("invalid number of arguments")
 except:
-    pass
+    raise
